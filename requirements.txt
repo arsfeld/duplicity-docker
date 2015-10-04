@@ -1,5 +1,6 @@
 # Duplicity general requirements
 lockfile
+setuptools
 # AWS S3
 boto
 # Azure
