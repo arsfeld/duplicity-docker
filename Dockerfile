@@ -22,4 +22,6 @@ RUN export VERSION=0.7.05 && \
    ./setup.py install
 
 # Set the ENTRYPOINT
-ENTRYPOINT [ "/usr/local/bin/duplicity" ]
+COPY ./docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
+ENTRYPOINT ["/docker-entrypoint.sh"]
