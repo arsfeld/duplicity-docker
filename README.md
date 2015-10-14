@@ -15,12 +15,13 @@ Home directory full backup of user 'dummy' to the local USB mounted disk
 located in '/run/media/dummy/usb-disk' with no encryption support with exclusion
 of some directories
 
-    docker run --rm=true -v $HOME:/home/dummy:ro -v /run/media:/run/media \
-        -v /home/dummy/.cache/duplicity:/home/dummy/.cache/duplicity
-        -h duplicity-local-laptop -u `id -u dummy`  kartoch/duplicity:latest 
-        full /home/dummy/  file:///run/media/dummy/usb-disk --no-encryption \ 
-        --exclude=/home/dummy/.cache --exclude=/home/dummy/tmp  \
-        --archive-dir=/home/dummy/.cache/duplicity --name=duplicity-local-laptop
+    docker run --rm=true -v /home/dummy:/home/dummy/:ro -v /run/media:/run/media \
+      -v /home/dummy/.cache/duplicity:/home/dummy/.cache/duplicity \
+      -h duplicity-local-laptop -u `id -u dummy` -e HOME=/home/dummy \
+      kartoch/duplicity:latest \
+      duplicity full /home/dummy/  file:///run/media/dummy/usb-disk --no-encryption \ 
+      --exclude=/home/dummy/.cache --exclude=/home/dummy/tmp  \
+      --archive-dir=/home/dummy/.cache/duplicity --name=duplicity-local-laptop
 
 Remarks / Caveats :
 
@@ -29,4 +30,3 @@ Remarks / Caveats :
 * '-u $UID' is set to avoid "accidents" on dummy home, as container uses root rights.
 * To avoid source mismatch (check on hostname by duplicity), hostname is set using '-h'
   flag on docker.
-* '--archive-dir' duplicity option is needed as '$HOME' is not set in docker container. 
