@@ -12,7 +12,7 @@ ADD requirements.txt /opt/
 RUN pip install --upgrade --requirement /opt/requirements.txt
 
 # Download and install duplicity
-RUN export VERSION=0.7.05 && \
+RUN export VERSION=0.7.06 && \
    cd /tmp/ && \
    wget https://code.launchpad.net/duplicity/0.7-series/$VERSION/+download/duplicity-$VERSION.tar.gz && \
    cd /opt/ && \
